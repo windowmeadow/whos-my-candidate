@@ -1,10 +1,13 @@
 #!/usr/bin/env node
 
+// Load .env in development if present
+import 'dotenv/config';
+
 /**
  * Module dependencies.
  */
 
-import app, { set } from '../app';
+import app from '../app.js'; // CHANGED to app.js
 import debug from 'debug';
 import { createServer } from 'http';
 
@@ -15,7 +18,7 @@ debug('back-end:server');
  */
 
 var port = normalizePort(process.env.PORT || '3000');
-set('port', port);
+app.set('port', port); // CHANGED to app.set
 
 /**
  * Create HTTP server.

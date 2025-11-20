@@ -2,16 +2,13 @@ import { useState } from 'react'
 import reactLogo from './assets/react.svg'
 import viteLogo from '/vite.svg'
 import './App.css'
+import ElectionLookup from './ElectionLookup'
 
 function App() {
   const [count, setCount] = useState(0)
 
+  // Representative lookup removed. Use the ElectionLookup component below for elections/voterinfo.
 
-  fetch("/api/test-get")
-    .then(response => response.json())
-    .then(json => console.log(json));
-
-    
   return (
     <>
       <div>
@@ -23,7 +20,12 @@ function App() {
         </a>
       </div>
       <h1>Vite + React</h1>
-      <div className="card">
+
+      {/* Representative lookup removed. Use the ElectionLookup component below for elections/voterinfo. */}
+
+  <ElectionLookup />
+
+      <div className="card" style={{ marginTop: 20 }}>
         <button onClick={() => setCount((count) => count + 1)}>
           count is {count}
         </button>

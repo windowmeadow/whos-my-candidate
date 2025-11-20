@@ -7,6 +7,7 @@ import logger from 'morgan';
 
 import indexRouter from './routes/index.js';
 import usersRouter from './routes/users.js';
+import electionsRouter from './routes/elections.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
@@ -15,7 +16,8 @@ const app = express();
 
 // view engine setup
 app.set('views', join(__dirname, 'views'));
-app.set('view engine', 'hbs');
+// Use Jade (installed) since the views are .jade files in the views/ folder
+app.set('view engine', 'jade');
 
 app.use(logger('dev'));
 app.use(json());
@@ -25,6 +27,7 @@ app.use(expressStatic(join(__dirname, 'public')));
 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
+app.use('/api/elections', electionsRouter);
 
 // catch 404 and forward to error handler
 app.use((req, res, next) => {
