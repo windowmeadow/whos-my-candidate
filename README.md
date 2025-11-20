@@ -2,26 +2,18 @@
 
 CIS 4160 Semester Project
 
-This repository contains a small full-stack app with a Vite + React frontend and an Express backend. The backend includes proxy routes to the Google Civic Information API. The app ships an "Election participants by ZIP" UI that looks up elections and voter information (contests and candidates) for a supplied ZIP code without exposing the API key in the browser.
+To run this file, you need an API key from Google. 
+go to https://console.cloud.google.com/apis/dashboard --> Select Credentials --> Make a new API Key configuring it in whatever way so that it is allowed to access the Google Civic Information API.
+
+Navigate to 'Enabled APIs and Services' and press the 'Enable APIs and Services' button. search for 'Google Civic Information API' and select in. Add that API to your project. Now, you have enabled the key for use with the Google Civic Information API.
+dd
 
 Quick start
 1. Backend - set API key and run
-
-	 - Option A (temporary, shell-only):
-
-		 ```bash
-		 export GOOGLE_CIVIC_API_KEY="your_real_key_here"
-		 cd backend
-		 npm install
-		 npm start
-		 ```
-
-	 - Option B (recommended for local dev): create a `backend/.env` file from `backend/.env.example` and add your key (the backend is configured to load `.env` in development):
-
 		 ```bash
 		 cd backend
 		 cp .env.example .env
-		 # edit .env and set GOOGLE_CIVIC_API_KEY=your_real_key_here
+		 # edit the new .env and set GOOGLE_CIVIC_API_KEY=your_real_key_here
 		 npm install
 		 npm start
 		 ```
@@ -70,5 +62,3 @@ Notes and next steps
 
 - The backend currently returns the raw JSON from the Google Civic API. If you want a smaller payload or specific fields, I can filter the response server-side.
 - Consider adding caching or rate-limiting to avoid hitting API quotas for repeated lookups.
-
-If you'd like, I can add a short `backend/README.md` or update the top-level README with deployment instructions, or implement UI improvements to render representatives in a friendly format.
