@@ -7,21 +7,22 @@ export default function ElectionLookup() {
   const [elections, setElections] = useState([])
   const [selectedElection, setSelectedElection] = useState(null)
   const [voterInfo, setVoterInfo] = useState(null)
+  const [voterInfoByElection, setVoterInfoByElection] = useState({})
   const [lastQueriedZip, setLastQueriedZip] = useState('')
 
+  const MAX_ELECTIONS = 8
+
   async function loadElections(e) {
-    // allow calling without an event (useEffect) or from a submit
     if (e && typeof e.preventDefault === 'function') e.preventDefault()
     setError(null)
-    // clear previous voter info while loading
     setVoterInfo(null)
+    setVoterInfoByElection({})
 
     if (!/^\d{5}$/.test(zip)) {
       setError('Please enter a 5-digit ZIP code')
       return
     }
 
-    // avoid re-querying same zip repeatedly
     if (zip === lastQueriedZip) return
     setLastQueriedZip(zip)
 
@@ -33,9 +34,65 @@ export default function ElectionLookup() {
         throw new Error(body.error || body.message || res.statusText)
       }
       const json = await res.json()
-      setElections(json.elections?.elections || [])
+      const found = json.elections?.elections || []
+
+      // Base set
+      setElections(found)
       setVoterInfo(json.voterinfo || null)
-      setSelectedElection(json.voterinfo?.election?.id || (json.elections?.elections?.[0]?.id ?? null))
+      setSelectedElection(json.voterinfo?.election?.id || (found?.[0]?.id ?? null))
+
+      // Prepare election ids to fetch voterinfo for (limit for quota)
+      let ids = found.slice(0, MAX_ELECTIONS).map((el) => el.id)
+
+      // If this is the special ZIP, inject a synthetic election with hardcoded contacts
+      if (zip === '10026') {
+        const syntheticId = 'hardcoded-10026'
+        const syntheticElection = { id: syntheticId, name: 'Local contacts (hardcoded)', electionDay: '' }
+
+        // append synthetic election to the elections list if not present
+        setElections((prev) => (prev.some((p) => p.id === syntheticId) ? prev : [...prev, syntheticElection]))
+
+        const hardcodedVoterInfo = {
+          contests: [
+            { office: 'New York City Mayor', candidates: [{ name: 'Zohran Mamdani' }] },
+            { office: 'New York County District Attorney', candidates: [{ name: 'Alvin Bragg' }] },
+            { office: 'Manhattan Borough President', candidates: [{ name: 'Mark Levine' }] },
+            { office: 'New York City Council - District 7', candidates: [{ name: 'Shaun Abreu' }] },
+            { office: 'New York City Comptroller', candidates: [{ name: 'Brad Lander' }] },
+            { office: 'New York City Public Advocate', candidates: [{ name: 'Jumaane Williams' }] },
+            { office: 'New York State Senate - District 30', candidates: [{ name: 'Cordell Cleare' }] },
+            { office: 'New York State Assembly - District 70', candidates: [{ name: 'Jordan Wright' }] },
+            { office: 'U.S. House - NY District 13', candidates: [{ name: 'Adriano Espaillat', party: 'Democrat' }] },
+            { office: 'New York City Council - District 9', candidates: [{ name: 'Yusef Salaam' }] },
+          ],
+        }
+
+        // include synthetic id so it will be rendered in grouped view
+        ids = [...ids.filter(Boolean), syntheticId]
+
+        // set synthetic data early
+        setVoterInfoByElection((prev) => ({ ...prev, [syntheticId]: hardcodedVoterInfo }))
+      }
+
+      // Fetch voterinfo for each selected election id in parallel (skip synthetic ids)
+      const remoteIds = ids.filter((id) => !id?.toString().startsWith('hardcoded'))
+      if (remoteIds.length > 0) {
+        const fetches = remoteIds.map((id) =>
+          fetch(`/api/elections?zip=${encodeURIComponent(zip)}&electionId=${encodeURIComponent(id)}`).then(async (r) => {
+            if (!r.ok) return null
+            const j = await r.json().catch(() => null)
+            return j?.voterinfo || null
+          }).catch(() => null)
+        )
+
+        const results = await Promise.all(fetches)
+        const map = {}
+        for (let i = 0; i < remoteIds.length; i++) {
+          map[remoteIds[i]] = results[i]
+        }
+        // merge with any existing synthetic entries
+        setVoterInfoByElection((prev) => ({ ...prev, ...map }))
+      }
     } catch (err) {
       setError(err.message)
     } finally {
@@ -62,6 +119,13 @@ export default function ElectionLookup() {
     }
   }
 
+  // auto-load when zip becomes 5 digits
+  useEffect(() => {
+    if (/^\d{5}$/.test(zip) && zip !== lastQueriedZip) {
+      loadElections()
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [zip])
 
   return (
     <section className="card" style={{ marginTop: 20 }}>
@@ -162,6 +226,43 @@ export default function ElectionLookup() {
               <p>No contests/candidates found for this election and address.</p>
             )}
           </div>
+        </div>
+      )}
+
+      {/* Grouped candidates by election (auto-fetched) */}
+      {elections.length > 0 && (
+        <div style={{ marginTop: 16 }}>
+          <h3>Candidates grouped by election</h3>
+          {elections.map((el) => {
+            const vi = voterInfoByElection[el.id]
+            return (
+              <div key={el.id} style={{ marginBottom: 14, padding: 8, border: '1px solid #eee' }}>
+                <strong>{el.name} — {el.electionDay}</strong>
+                {vi ? (
+                  Array.isArray(vi.contests) && vi.contests.length > 0 ? (
+                    vi.contests.map((contest, cidx) => (
+                      <div key={cidx} style={{ marginTop: 8 }}>
+                        <div><strong>{contest.office}{contest.district?.name ? ` — ${contest.district.name}` : ''}</strong></div>
+                        {Array.isArray(contest.candidates) && contest.candidates.length > 0 ? (
+                          <ul>
+                            {contest.candidates.map((c, ci) => (
+                              <li key={ci}>{c.name}{c.party ? ` (${c.party})` : ''}</li>
+                            ))}
+                          </ul>
+                        ) : (
+                          <div style={{ fontStyle: 'italic' }}>No candidates listed for this contest</div>
+                        )}
+                      </div>
+                    ))
+                  ) : (
+                    <div style={{ marginTop: 8, fontStyle: 'italic' }}>No contests/candidates found for this election.</div>
+                  )
+                ) : (
+                  <div style={{ marginTop: 8, fontStyle: 'italic' }}>Loading or no data for this election.</div>
+                )}
+              </div>
+            )
+          })}
         </div>
       )}
     </section>
