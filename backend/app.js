@@ -6,8 +6,7 @@ import cookieParser from 'cookie-parser';
 import logger from 'morgan';
 
 import indexRouter from './routes/index.js';
-import usersRouter from './routes/users.js';
-import electionsRouter from './routes/elections.js';
+import candidatesRouter from './routes/candidates.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
@@ -26,8 +25,7 @@ app.use(cookieParser());
 app.use(expressStatic(join(__dirname, 'public')));
 
 app.use('/', indexRouter);
-app.use('/users', usersRouter);
-app.use('/api/elections', electionsRouter);
+app.use('/api/candidates', candidatesRouter);
 
 // catch 404 and forward to error handler
 app.use((req, res, next) => {

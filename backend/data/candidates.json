@@ -1,0 +1,102 @@
+[
+  {
+    "id": "c01",
+    "slug": "zohran-mamdani",
+    "name": "Zohran Mamdani",
+    "party": "Democrat",
+    "office": "State Assembly",
+    "imageUrl": "/images/candidates/Zohran.jpg",
+    "summary": "Advocate for housing justice and progressive reforms",
+    "bio": "Zohran Kwame Mamdani is a New York State Assemblymember and democratic socialist running for Mayor. Born in Uganda and raised in New York City, he has fought for the working class in and outside the legislature: hunger striking alongside taxi drivers to achieve more than $450 million in transformative debt relief, winning over $100 million in the state budget for increased subway service and a successful fare-free bus pilot, and organizing New Yorkers to defeat a proposed dirty power plant. Mamdani believes that government can lower costs and make life easier in our city — he will use every tool available to bring down the rent, create world class public transit, and make it easier to raise a family."
+  },
+  {
+    "id": "c02",
+    "slug": "alvin-bragg",
+    "name": "Alvin Bragg",
+    "party": "Democrat",
+    "office": "District Attorney",
+    "imageUrl": "/images/candidates/Alvin.jpg",
+    "summary": "Focus on criminal justice reform and community safety",
+    "bio": "Alvin Bragg is focused on ensuring a fair, transparent, and effective justice system while prioritizing community safety. His platform emphasizes reducing gun violence, addressing wrongful convictions, and expanding alternatives to incarceration for nonviolent offenses."
+  },
+  {
+    "id": "c03",
+    "slug": "mark-levine",
+    "name": "Mark Levine",
+    "party": "Democrat",
+    "office": "Borough President",
+    "imageUrl": "/images/candidates/Mark.jpg",
+    "summary": "Public health and equitable development champion",
+    "bio": "Mark Levine advocates for equitable development, climate resilience, and expanded public health infrastructure. He highlights a record of supporting pandemic response efforts, green spaces, and housing initiatives that serve diverse communities."
+  },
+  {
+    "id": "c04",
+    "slug": "shaun-abreu",
+    "name": "Shaun Abreu",
+    "party": "Democrat",
+    "office": "City Council - District 7",
+    "imageUrl": "/images/candidates/Shaun.jpg",
+    "summary": "Tenant rights and neighborhood investment priorities",
+    "bio": "Shaun Abreu focuses on strengthening tenant protections, expanding affordable housing, and investing in public amenities that uplift local neighborhoods. He supports community-driven development and improved city services."
+  },
+  {
+    "id": "c05",
+    "slug": "brad-lander",
+    "name": "Brad Lander",
+    "party": "Democrat",
+    "office": "City Comptroller",
+    "imageUrl": "/images/candidates/Brad.jpg",
+    "summary": "Fiscal accountability and climate resilience initiatives",
+    "bio": "Brad Lander promotes transparent budgeting, ethical oversight, and investments that prepare the city for climate challenges. He supports auditing programs to improve efficiency and directing funds toward sustainability and equity."
+  },
+  {
+    "id": "c06",
+    "slug": "jumaane-williams",
+    "name": "Jumaane Williams",
+    "party": "Democrat",
+    "office": "Public Advocate",
+    "imageUrl": "/images/candidates/Jumaane.jpg",
+    "summary": "Social justice and public safety oversight leader",
+    "bio": "Jumaane Williams centers his platform on social justice, affordable housing, and accountable public safety oversight. He advocates for community-based violence prevention and expanded access to mental health resources."
+  },
+  {
+    "id": "c07",
+    "slug": "cordell-cleare",
+    "name": "Cordell Cleare",
+    "party": "Democrat",
+    "office": "State Senate - District 30",
+    "imageUrl": "/images/candidates/Cordell.jpg",
+    "summary": "Education and health equity advocate",
+    "bio": "Cordell Cleare focuses on educational opportunity, public health equity, and environmental justice. Her priorities include school resource investments, healthcare access, and protections against pollution in vulnerable communities."
+  },
+  {
+    "id": "c08",
+    "slug": "jordan-wright",
+    "name": "Jordan Wright",
+    "party": "Democrat",
+    "office": "State Assembly - District 70",
+    "imageUrl": "/images/candidates/Jordan.jpg",
+    "summary": "Community engagement and youth services focus",
+    "bio": "Jordan Wright highlights youth services, community engagement, and safer streets. His platform includes expanding after-school programs, supporting small businesses, and improving transportation reliability."
+  },
+  {
+    "id": "c09",
+    "slug": "adriano-espaillat",
+    "name": "Adriano Espaillat",
+    "party": "Democrat",
+    "office": "U.S. House - NY District 13",
+    "imageUrl": "/images/candidates/Adriano.jpg",
+    "summary": "Immigration reform and small business support",
+    "bio": "Adriano Espaillat emphasizes humane immigration policy, support for small businesses, and equitable economic development. He advocates for pathways to citizenship and investment in local entrepreneurial ecosystems."
+  },
+  {
+    "id": "c10",
+    "slug": "yusef-salaam",
+    "name": "Yusef Salaam",
+    "party": "Democrat",
+    "office": "City Council - District 9",
+    "imageUrl": "/images/candidates/Yusef.jpg",
+    "summary": "Justice system reform and youth empowerment",
+    "bio": "Yusef Salaam is committed to justice system reform, restorative approaches to public safety, and mentorship opportunities for youth. He supports policies that reduce recidivism and expand educational pathways."
+  }
+]

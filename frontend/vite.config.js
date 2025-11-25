@@ -6,7 +6,8 @@ export default defineConfig({
   plugins: [react()],
   server: {
     proxy: {
-      '/api': 'http://localhost:3000', // Proxy API requests to your backend
+      '/api': 'http://localhost:3000', // Proxy API requests to backend
+      '/images': 'http://localhost:3000', // Proxy image asset requests to backend static folder for dev
     },
   },
 })
